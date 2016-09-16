@@ -1,0 +1,27 @@
+students = load '/home/acadgild/PigNotes/Assignment9dataset.txt' using PigStorage(',') as
+(Name:chararray,colundertaken:chararray,Dob:chararray,gstream:chararray,Grade:float,state:chararray,city:chararray)
+
+1. Find the number of students who scored less than 5(50%).
+
+sam = FOREACH students GENERATE Grade
+per = FILTER sam by Grade <=5;
+gr = Group per All;
+co = FOREACH gr GENERATE COUNT(per);
+
+
+2. List the name of students who are from Alaska.
+
+st = FILTER students by state == 'alaska';
+names = FOREACH students GENERATE Name;
+
+3. How many government collages are there in Alabama?
+
+st = FILTER students by colundertaken == 'goverenment';
+gr = Group st All;
+coll = FOREACH gr GENERATE COUNT(st);
+
+4. List the name of students who are from Oregon and persuing BE
+
+st = FILTER students by state == 'oregon';
+A = FILTER st by sgtream == 'BE';
+names = FOREACH A GENERATE Name;
